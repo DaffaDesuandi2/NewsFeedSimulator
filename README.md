@@ -1,6 +1,6 @@
-Nama: Falih Faiq Fahlurrahman
+Nama: Muhammad Daffansyah Desuandi  
 
-NIM: 123140129
+NIM: 123140127
 
 Program Studi: Teknik Informatika
 
@@ -8,52 +8,128 @@ Mata Kuliah: Pengembangan Aplikasi Mobile
 
 -----------------------------------------------------------------------------------------------------------------------------
 
-Cara Menjalankan Aplikasi
+📰 News Feed Simulator (Kotlin + Coroutines + Flow)
 
-1. Persiapan Lingkungan
-Pastikan Android Studio (Versi Ladybug 2024.2.1 atau terbaru) sudah terinstal.
+Aplikasi simulasi news feed berbasis console menggunakan Kotlin Coroutines, Flow, dan StateFlow.
 
-Gunakan JDK 17 atau versi terbaru yang kompatibel dengan proyek Android.
+Project ini dibuat untuk memahami konsep reactive programming dan asynchronous programming di Kotlin.
 
-2. Impor Proyek
-Buka Android Studio.
+**🚀 Fitur**
 
-Pilih File > Open dan arahkan ke folder proyek NewsFeedSimulator ini.
+✅ Flow yang menghasilkan data berita baru setiap 2 detik
+✅ Filter berita berdasarkan kategori tertentu
+✅ Transformasi data menjadi format tampilan
+✅ StateFlow untuk menyimpan jumlah berita yang sudah dibaca
+✅ Coroutine untuk mengambil detail berita secara asynchronous
 
-Tunggu hingga proses Gradle Sync selesai. Pastikan koneksi internet stabil untuk mengunduh library Coroutines dan Flow.
+**🛠 Teknologi yang Digunakan**
 
-3. Menjalankan Simulasi
-Hubungkan perangkat Android fisik atau jalankan Emulator.
+Kotlin (JVM)
 
-Klik tombol Run (ikon segitiga hijau ▶) pada toolbar atas.
+kotlinx-coroutines-core
 
-Aplikasi akan terinstal, namun karena ini adalah simulasi logic, tampilan layar HP mungkin akan kosong (Putih).
+Flow
 
-4. Memeriksa Output (PENTING)
-Seluruh aktivitas simulasi data (Flow, Filter, Transform, dan StateFlow) dapat dilihat melalui Logcat:
+StateFlow
 
-Buka tab Logcat di bagian bawah jendela Android Studio.
+Coroutines
 
-Pada kolom pencarian/filter Logcat, ketik kata kunci: PRAKTIKUM.
+**📦 Struktur Project**
 
-Anda akan melihat aliran data sebagai berikut:
+NewsFeedSimulator
+│
+├── News.kt
+├── NewsGenerator.kt
+├── NewsFilter.kt
+├── NewsTransform.kt
+├── NewsState.kt
+└── Main.kt
 
-Berita baru muncul setiap 2 detik.
+🔄 Cara Kerja Aplikasi
+1️⃣ Generator Berita (Flow)
 
-Hanya berita dengan kategori tertentu yang lolos Filter.
+Flow akan menghasilkan objek News setiap 2 detik.
 
-Status StateFlow yang menampilkan jumlah berita yang sudah dibaca.
+fun newsGenerator(): Flow<News>
 
-Detail berita yang diambil secara asinkron menggunakan Async/Await.
 
------------------------------------------------------------------------------------------------------------------------------
+Flow bersifat cold stream, artinya data hanya akan berjalan ketika dikoleksi.
 
-Ringkasan Fitur yang Berjalan
+2️⃣ Filter Berita
 
-Flow Builder: Menghasilkan data stream secara real-time.
+Berita dapat difilter berdasarkan kategori tertentu.
 
-Operators: Implementasi .filter() dan .map() untuk transformasi data.
+Contoh:
 
-State Management: StateFlow untuk menjaga konsistensi jumlah data yang dibaca.
+flow.filter { it.category == "Tech" }
 
-Concurrency: Penggunaan Dispatchers.IO untuk operasi asinkron yang efisien.
+3️⃣ Transformasi Data
+
+Data berita diubah menjadi format string yang siap ditampilkan.
+
+flow.map { "[${it.category}] ${it.title}" }
+
+4️⃣ StateFlow (Manajemen State)
+
+Jumlah berita yang sudah dibaca disimpan menggunakan MutableStateFlow.
+
+val readCount = MutableStateFlow(0)
+
+
+StateFlow cocok digunakan untuk menyimpan state yang selalu ter-update.
+
+5️⃣ Pengambilan Detail Secara Async
+
+Simulasi pengambilan detail berita menggunakan fungsi suspend.
+
+suspend fun fetchNewsDetail(news: News): String
+
+
+Delay digunakan untuk mensimulasikan request ke server.
+
+▶️ Cara Menjalankan
+
+Clone repository
+
+git clone https://github.com/username/news-feed-simulator.git
+
+
+Buka di IntelliJ IDEA
+
+Pastikan dependency berikut sudah ditambahkan:
+
+implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+
+
+Jalankan file Main.kt
+
+**📚 Konsep yang Dipelajari**
+
+Konsep	Penjelasan
+Flow	Stream data asynchronous
+Cold Flow	Flow berjalan saat dikoleksi
+StateFlow	Penyimpan state reaktif
+Coroutine	Thread ringan untuk async
+Suspend Function	Fungsi non-blocking
+
+**🎯 Tujuan Project**
+
+Project ini dibuat untuk memahami:
+
+Reactive programming di Kotlin
+
+Manajemen state modern
+
+Asynchronous programming
+
+Konsep dasar arsitektur seperti MVVM
+
+Project ini dapat dikembangkan menjadi:
+
+Aplikasi Android dengan ViewModel
+
+Jetpack Compose UI
+
+Integrasi REST API
+
+Integrasi Database (Room)
